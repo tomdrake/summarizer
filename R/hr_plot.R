@@ -1,12 +1,14 @@
-#With frailty/clustering turned on
-hr.plot = function(df, dependent, explanatory, dependent_label = NULL, factorlist=NULL, coxfit=NULL, column_space=c(-0.5, 0, 0.5), ...){
+hr.plot = function(df, dependent, explanatory, dependent_label = NULL, factorlist=NULL, coxfit=NULL, frailty_cluster_off = F, column_space=c(-0.5, 0, 0.5), ...){
   require(ggplot2)
   require(scales)
   # Generate or format factorlist object
   if(is.null(factorlist)){
     factorlist = summary.factorlist(df, dependent, explanatory, glm.id=TRUE)
+    if (frailty_cluster_off == FALSE){
+    factorlist = summary.factorlist(df, dependent, explanatory, glm.id=TRUE)
     factorlist = factorlist[!grepl("cluster", factorlist$glm.id),]#remove if using this word
     factorlist = factorlist[!grepl("frailty", factorlist$glm.id),]#remove if using this word
+    }
   }
   
   # Extract totals (this is CPH specific due to how summary.factorlist works)
@@ -80,4 +82,5 @@ hr.plot = function(df, dependent, explanatory, dependent_label = NULL, factorlis
   gridExtra::grid.arrange(t1, g1, ncol=2, widths = c(3,2),
                           top=grid::textGrob(title, x=0.02, y=0.2, gp=grid::gpar(fontsize=18), just="left"))
 }
+
 
