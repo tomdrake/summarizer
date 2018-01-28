@@ -1,9 +1,9 @@
 # Function multiple univariable logistic regressions against a list of explanatory variables -----------
 glmuni <- function(df.in, dependent, explanatory){
-	result <- list()
-	for (i in 1:length(explanatory)){
-		result[[i]] <- glm(paste(dependent, "~", explanatory[i]), data=df.in, family="binomial")
-	}
-	class(result) = "glmlist"
-	return(result)
+  result <- list()
+  for (i in 1:length(explanatory)){
+    result[[i]] <- glm(paste(dependent, "~", explanatory[i]), data=df.in, family="binomial")
+  }
+  class(result) = "glmlist"
+  return(result)
 }
